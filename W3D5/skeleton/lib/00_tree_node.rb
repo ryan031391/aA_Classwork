@@ -1,3 +1,4 @@
+require "byebug"
 class PolyTreeNode
     attr_reader :parent, :children, :value
 
@@ -29,20 +30,24 @@ class PolyTreeNode
         raise "error" if !@children.include?(node)
         node.parent = nil
     end
+    # debugger
 
-    def dfs(target, node = self)     # a [b,c] [d,e,f,g] [b,c] => [c] => [d,e,c]
-        if self == target
-            return true
-        else
-            if !self.children.empty?
-                self.children.each do |child_node|
-                    child_node.dfs(target)
-                end
-            else 
-                return nil
-            end
-            
+    def dfs(target=nil)      # a [b,c] [d,e,f,g] [b,c] => [c] => [d,e,c]
+        # prc ||= Proc.new {|node| node.value == target}
+
+        if self.value == target
+            return self
         end
+
+        children.each do |child_node|
+            result = child_node.dfs(target) 
+            return result if result != nil
+        end
+        return nil
+    end
+
+    def bfs(target)
+        
     end
 
 end
@@ -61,5 +66,7 @@ end
     #   a
     # b   c
     #d e f g
-    # a => b => d => e => c => f => g
+    # a => b => c => d => e => f => g
 
+# nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) } 
+# nodes.first.dfs('e')
