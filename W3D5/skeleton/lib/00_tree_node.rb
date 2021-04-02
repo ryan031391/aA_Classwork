@@ -68,10 +68,5 @@ end
     #d e f g
     # a => b => c => d => e => f => g
 
-<<<<<<< HEAD
 # nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) } 
 # nodes.first.dfs('e')
-=======
-nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) } 
-nodes.first.dfs('e')
->>>>>>> ba0d8588040ced2b07cf31b2087eb0f610dd093d
