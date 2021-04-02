@@ -47,26 +47,19 @@ class PolyTreeNode
     end
 
     def bfs(target)
-        
+        arr = [self]
+        until arr.empty?
+            if arr[0].value != target
+                if !arr[0].children.empty?
+                    arr += arr[0].children
+                    arr.shift
+                else
+                    arr.shift
+                end
+            else
+                return arr[0]
+            end
+        end
     end
 
 end
-
-    # def dfs(target, node = self)
-    #     return nil if node.children.empty?
-    #        if node.children[-1] == target
-    #            return true
-    #        else
-    #            node.children.pop
-    #            dfs(target, node.children[-1])
-    #        end
-    # end
-
-
-    #   a
-    # b   c
-    #d e f g
-    # a => b => c => d => e => f => g
-
-# nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) } 
-# nodes.first.dfs('e')
