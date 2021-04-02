@@ -30,13 +30,18 @@ class PolyTreeNode
         node.parent = nil
     end
 
-    def dfs(target, node = self)
-    return nil if node.children.empty?
-        if node.children[-1] == target
+    def dfs(target, node = self)     # a [b,c] [d,e,f,g] [b,c] => [c] => [d,e,c]
+        if self == target
             return true
         else
-            node.children.pop
-            dfs(target, node.children[-1])
+            if !self.children.empty?
+                self.children.each do |child_node|
+                    child_node.dfs(target)
+                end
+            else 
+                return nil
+            end
+            
         end
     end
 
@@ -52,4 +57,9 @@ end
     #        end
     # end
 
+
+    #   a
+    # b   c
+    #d e f g
+    # a => b => d => e => c => f => g
 
