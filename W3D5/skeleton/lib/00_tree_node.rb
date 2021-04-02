@@ -30,6 +30,26 @@ class PolyTreeNode
         node.parent = nil
     end
 
+    def dfs(target, node = self)
+    return nil if node.children.empty?
+        if node.children[-1] == target
+            return true
+        else
+            node.children.pop
+            dfs(target, node.children[-1])
+        end
+    end
+
 end
 
-def
+    # def dfs(target, node = self)
+    #     return nil if node.children.empty?
+    #        if node.children[-1] == target
+    #            return true
+    #        else
+    #            node.children.pop
+    #            dfs(target, node.children[-1])
+    #        end
+    # end
+
+
