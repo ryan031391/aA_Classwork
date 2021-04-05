@@ -1,7 +1,12 @@
 class PolyTreeNode
+
+    def next_step
+        child = PolyTreeNode.new(children.sample)
+    end
+
     attr_reader :parent, :children, :value
 
-    def initialize(new_node)
+    def initialize(new_node, parent = nil)
         # @grid 
         @parent = nil 
         @children = []
@@ -13,6 +18,19 @@ class PolyTreeNode
     # def board
     #     @grid ||= Array.new(8) {Array.new}
     # end
+    def parent=(parent_node)
+        if @parent == nil
+            @parent = parent_node
+            parent_node.children << self
+        elsif parent_node == nil
+            @parent.children.delete(self)
+            @parent = nil
+        else 
+            @parent.children.delete(self)
+            @parent = parent_node
+            parent_node.children << self
+        end
+    end
 
     def parent
         child.parent = self
@@ -36,12 +54,6 @@ class PolyTreeNode
     #     children << [row+1,col-2] if valid_child([row+1,col-2])
     # end
 
-    def next_step
-        child = PolyTreeNode.new(children.sample)
-    end
 
 
 end
-
-bfs dfs
-    
