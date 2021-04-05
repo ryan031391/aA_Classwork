@@ -17,14 +17,13 @@ class KnightPathFinder
         # @current_position = consider_positon[-1]
     end
 
-    def build_move_tree(finish)
-        path_tree = [@start_pos.value]
-        curr_pos = path_tree[0]
-        if curr_pos != finish
-            path_tree += new_move_position(path_tree[0])
-            prev_pos = path_tree.shift
-            path_tree.each do |node|
-                make_node(node, prev_pos)
+    def build_move_tree
+        path_tree = [@start_pos]
+        until path_tree.empty? 
+            curr_node = path_tree.shift
+            new_move_position(curr_node.value).each do |node|
+                curr_node.add_child(node)
+                path_tree << node
             end
         end
     end
@@ -34,25 +33,22 @@ class KnightPathFinder
         node.children += new_move_position(pos)
     end
 
-    #pos => instance Poly
-    # children 
-    #parent = prev poly
 
-    def bfs(target)
-        arr = [self]
-        until arr.empty?
-            if arr[0].value != target
-                if !arr[0].children.empty?
-                    arr += arr[0].children
-                    arr.shift
-                else
-                    arr.shift
-                end
-            else
-                return arr[0]
-            end
-        end
-    end
+    # def bfs(target)
+    #     arr = [self]
+    #     until arr.empty?
+    #         if arr[0].value != target
+    #             if !arr[0].children.empty?
+    #                 arr += arr[0].children
+    #                 arr.shift
+    #             else
+    #                 arr.shift
+    #             end
+    #         else
+    #             return arr[0]
+    #         end
+    #     end
+    # end
 
     def find_path()
 
@@ -64,15 +60,15 @@ class KnightPathFinder
         arr = []
         row = pos[0]
         col = pos[1]
-        arr << [row-2,col+1] if KnightPathFinder.valid_moves([row-2,col+1])
-        arr << [row+2,col+1] if KnightPathFinder.valid_moves([row+2,col+1])
-        arr << [row-2,col-1] if KnightPathFinder.valid_moves([row-2,col-1])
-        arr << [row+2,col-1] if KnightPathFinder.valid_moves([row+2,col-1])
-        arr << [row-1,col+2] if KnightPathFinder.valid_moves([row-1,col+2])
-        arr << [row-1,col-2] if KnightPathFinder.valid_moves([row-1,col-2])
-        arr << [row+1,col+2] if KnightPathFinder.valid_moves([row+1,col+2])
-        arr << [row+1,col-2] if KnightPathFinder.valid_moves([row+1,col-2])
-        @consider_positon += arr
+        arr << PolyTreeNode.new([row-2,col+1], pos) if KnightPathFinder.valid_moves([row-2,col+1])
+        arr << PolyTreeNode.new([row+2,col+1], pos) if KnightPathFinder.valid_moves([row+2,col+1])
+        arr << PolyTreeNode.new([row-2,col-1], pos) if KnightPathFinder.valid_moves([row-2,col-1])
+        arr << PolyTreeNode.new([row+2,col-1], pos) if KnightPathFinder.valid_moves([row+2,col-1])
+        arr << PolyTreeNode.new([row-1,col+2], pos) if KnightPathFinder.valid_moves([row-1,col+2])
+        arr << PolyTreeNode.new([row-1,col-2], pos) if KnightPathFinder.valid_moves([row-1,col-2])
+        arr << PolyTreeNode.new([row+1,col+2], pos) if KnightPathFinder.valid_moves([row+1,col+2])
+        arr << PolyTreeNode.new([row+1,col-2], pos) if KnightPathFinder.valid_moves([row+1,col-2])
+        arr.each {|ele| @consider_positon << ele.value}
         return arr
     end
 
