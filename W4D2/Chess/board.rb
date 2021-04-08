@@ -78,4 +78,3 @@ end
 # # a.move_piece([0,0], [6,0], :white)
 # a.move_piece([0,1], [2,2], :white)
 
-# a.print_b
