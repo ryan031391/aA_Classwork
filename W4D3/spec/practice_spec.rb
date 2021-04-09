@@ -34,3 +34,57 @@ describe '#stock_picker' do
     end
 end
 
+describe Hanoi do
+    subject(:tower) {Hanoi.new}
+    let(:stack) { double('Board', valid_pos?: true) }
+    
+    describe '#initialize' do
+        context'one stack should be [3,2,1] and two empty stacks' do
+            it 'should set up a hanoi tower' do
+                expect(tower.stacks).to eq([[3,2,1],[],[]])
+            end
+        end
+    end
+
+    describe '#move' do
+        context'valid input' do
+            it 'should not error if input is valid' do
+                tower.move(0,2)
+                expect(tower.move(0,1)).not_to raise_error
+            end       
+
+            it 'allows smaller bricks to go on top of bigger bricks' do
+                a = Hanoi.new
+                a.move(0,2)
+                a.move(0,1)
+                # tower.move(2,1)
+                expect(a.move(2,1)).not_to raise_error
+            end
+
+        end
+
+        # context 'invalid input' do 
+        #     it 'should raise error if start position is empty' do
+        #         tower.move(1,2)
+        #         expect{ tower.move }.to raise_error('Invalid move, plaeas enter valid start_pos and end_pos!')
+        #     end
+
+        #     it 'should raise error if the last element of start position is greater than the last element of end position' do
+        #         tower.mvoe(0,2)
+        #         tower.move(0,2)
+        #         expect{tower.move}.to raise_error('Invalid move, plaeas enter valid start_pos and end_pos!')
+        #     end
+        # end
+        
+    end
+
+end
+# [4,3,6,1]  
+# [5,2]
+# [7]
+#
+# [7,6,5,4,3,2,1]
+
+#[2,1]
+#[]
+#[3]
