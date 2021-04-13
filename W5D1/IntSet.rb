@@ -1,31 +1,29 @@
-class MaxIntSet
+class IntSet
 
-    def initialize(max)
-        @max = max
-        @table = Array.new(max, false)
+    attr_reader :max_size
+    def initialize(max_size)
+        @max_size = max_size
+        @buckets = Array.new(max_size) {Array.new}
     end
 
-    def insert(int)
-        raise "Number too big" if int >= @max
-        @table[int] = true
+    def insert(num)
+        @buckets[num%max_size] << num
     end
 
-    def remove(int)
-        raise "Number too big" if int >= @max
-        @table[int] = false
+    def remove(num)
+        @buckets[num%max_size].delete(num)
     end
 
-    def include?(int)
-        raise "Number too big" if int >= @max
-        @table[int]
+    def include?(num)
+        @buckets[num%max_size].include?(num)
     end
-
 end
 
-# a = MaxIntSet.new(10)
-# a.insert(12)
-# p a.include?(6)
-# a.remove(6)
-# p a.include?(6)
-
-
+a = IntSet.new(10)
+a.insert(6)
+a.insert(16)
+p a.include?(6)
+p a.include?(16)
+a.remove(6)
+p a.include?(6)
+p a.include?(16)
