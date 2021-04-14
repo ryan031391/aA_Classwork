@@ -55,3 +55,22 @@ CREATE TABLE
 
 INSERT INTO
     users (fname, lname)
+VALUE
+    ('John', 'Doe'),
+    ('James', 'Doe'),
+    ('David', 'Charles');
+INSERT INTO
+    questions (title, body, user_id)
+VALUE
+    ('Dog?', 'Happy?', (SELECT id FROM users WHERE fname = 'John'))
+    ('Cat?', 'Happy?', (SELECT id FROM users WHERE fname = 'David'));
+INSERT INTO
+    questions_follows (user_id, question_id)
+VALUE
+    ((SELECT id FROM users WHERE fname = 'James'), (SELECT id FROM questions WHERE title = 'Cat?')),
+    ((SELECT id FROM users WHERE fname = 'James'), (SELECT id FROM questions WHERE title = 'Dog?'));
+INSERT INTO
+    replies (question_id, user_id, body, parent_id)
+VALUE
+    ((SELECT id FROM questions WHERE title = 'Dog?'), (SELECT id FROM users WHERE fname = 'James'), 'It is happy!'),
+    ((SELECT id FROM questions WHERE title = 'Dog?'), (SELECT id FROM users WHERE fname = 'David'), 'Are you sure?', (SELECT id FROM replies WHERE parent_id IS NULL AND question_id = (SELECT id FROM questions WHERE title = 'Dog?')));
