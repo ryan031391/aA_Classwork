@@ -1,19 +1,19 @@
 require_relative 'questionsdatabase.rb'
 
-class Users
-    attr_accessor :id, :fname, :lname
+class QuestionLikes
+    attr_accessor :id, :user_id, :question_id
 
     def initialize(option)
         @id = option['id']
-        @fname = option['fname']
-        @lname = option['lname']
+        @user_id = option['user_id']
+        @question_id = option['question_id']
     end
 
     def self.all
         data = QuestionsDatabase.instance.execute(<<-SQL)
-        SELECT * FROM users
+        SELECT * FROM question_likes
         SQL
-        data.map {|ele| Users.new(ele)}
+        data.map {|ele| QuestionLikes.new(ele)}
     end
 
     def self.find_by_id(id)
