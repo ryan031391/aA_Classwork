@@ -25,4 +25,15 @@ class Questions
         self.all.select {|ele| ele.user_id == id }
     end
 
+    def author
+        # Question.find_by_author(self.user_id)
+        data = QuestionsDatabase.instance.execute(<<-SQL, self.user_id)
+        SELECT * FROM users
+        WHERE
+            id = ?
+        SQL
+
+        Users.new(data.first)
+    end
+
 end
