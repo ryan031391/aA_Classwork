@@ -22,4 +22,12 @@ class Replies
         self.all.select {|ele| ele.id == id }
     end
 
+    def self.find_by_user_id(id)
+        self.all.select {|ele| ele.user_id == id }
+    end
+
+    def self.find_by_question_id(id)
+        self.all.select {|ele| ele.question_id == id }
+    end
+
 end

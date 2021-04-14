@@ -21,4 +21,8 @@ class Questions
         self.all.select {|ele| ele.id == id }
     end
 
+    def self.find_by_author_id(id)
+        self.all.select {|ele| ele.user_id == id }
+    end
+
 end

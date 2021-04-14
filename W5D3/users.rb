@@ -20,4 +20,13 @@ class Users
         self.all.select {|ele| ele.id == id }
     end
 
+    def self.find_by_name(str1, str2)
+        name = QuestionsDatabase.instance.execute(<<-SQL, str1, str2)
+        SELECT * FROM users
+        WHERE 
+            fname = ? AND lname = ? 
+        SQL
+        Users.new(name.first) 
+    end
+
 end
