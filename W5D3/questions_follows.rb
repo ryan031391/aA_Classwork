@@ -20,4 +20,18 @@ class QuestionFollows
         self.all.select {|ele| ele.id == id }
     end
 
+    def self.followers_for_question_id(question_id)
+        data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+        SELECT users.id, fname, lname 
+        FROM
+            users
+        JOIN 
+            questions_follows on users.id = questions_follows.user_id
+        WHERE
+            question_id = ?
+
+        SQL
+        data.map {|ele| Users.new(ele)}
+    end
+
 end
