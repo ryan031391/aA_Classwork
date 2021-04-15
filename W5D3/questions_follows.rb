@@ -29,9 +29,21 @@ class QuestionFollows
             questions_follows on users.id = questions_follows.user_id
         WHERE
             question_id = ?
-
         SQL
         data.map {|ele| Users.new(ele)}
+    end
+
+    def self.followed_questions_for_user_id(id)
+        data = QuestionsDatabase.instance.execute(<<-SQL, id)
+        SELECT questions.id, title, body, questions.user_id
+        FROM
+            questions
+        JOIN
+            questions_follows ON questions.id = questions_follows.question_id
+        WHERE
+            questions_follows.user_id = ?
+        SQL
+        data.map {|ele| Questions.new(ele)}
     end
 
 end
