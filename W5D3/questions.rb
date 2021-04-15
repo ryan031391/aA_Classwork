@@ -36,4 +36,8 @@ class Questions
         Users.new(data.first)
     end
 
+    def replies
+        Replies.find_by_question_id(self.id)
+    end
+
 end

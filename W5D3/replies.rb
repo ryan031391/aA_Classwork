@@ -30,4 +30,37 @@ class Replies
         self.all.select {|ele| ele.question_id == id }
     end
 
+    def author
+        data = QuestionsDatabase.instance.execute(<<-SQL, self.user_id)
+            SELECT * FROM users
+            WHERE id = ?
+        SQL
+        Users.new(data.first)
+    end
+
+    def question
+        data = QuestionsDatabase.instance.execute(<<-SQL, self.question_id)
+            SELECT * FROM questions
+            WHERE id = ?
+        SQL
+        Questions.new(data.first)
+    end
+
+    def parent_reply
+        return nil if self.parent_id.nil?
+        data = QuestionsDatabase.instance.execute(<<-SQL, self.parent_id)
+            SELECT * FROM replies
+            WHERE id = ?
+        SQL
+        Replies.new(data.first)
+    end
+
+    def child_replies
+        data = QuestionsDatabase.instance.execute(<<-SQL, self.id)
+            SELECT * FROM replies
+            WHERE parent_id = ?
+        SQL
+        Replies.new(data.first)
+    end
+
 end
