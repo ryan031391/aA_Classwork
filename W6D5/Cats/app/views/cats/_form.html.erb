@@ -1,0 +1,38 @@
+<% if type == :new %>
+    <% action_url = cats_url %>
+    <% button_text = "Create Cat" %>
+<% elsif type == :edit %>
+    <% action_url = cat_url(cat) %>
+    <% button_text = "Update Cat" %>
+<% end %>
+
+<form action=<%= action_url %> method="POST">
+    <% if type == :edit %>
+        <input type="hidden" name="_method" value="PATCH">
+    <% end %>
+    
+    <label for="name">Name: 
+        <input id="name" name="cat[name]" type="text" value=<%= cat.name %>>
+    </label>
+
+    <label for="sex">Sex: </label>
+    <input id="sex" name="cat[sex]" type="radio" value="M" /> M<br />
+    <input id="sex" name="cat[sex]" type="radio" value="F" /> F
+
+    <label for="age">Age: 
+        <input id="age" name="cat[age]" type="text" value=<%= cat.age %>>
+    </label>
+    
+    <label for="color">Color: 
+        <input id="color" name="cat[color]" type="text" value=<%= cat.color %>>
+    </label>
+
+    <label for="description">Description: 
+        <textarea id="description" name="cat[description]" type="text" value="<%= cat.description %>">
+    </label>
+
+    <input type="submit" value=<%= button_text %>>
+
+    <%= select_tag 'color', options_for_select(COLORS.map{|color| ["#{color}"] }) %>
+
+    
