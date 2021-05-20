@@ -1,0 +1,92 @@
+.ttt {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap; 
+    width: 500px;
+    /* justify-content: center; */
+}
+
+li {
+    width: 150px;
+    height: 150px;
+    background-color: gray;
+    border: 5px solid black;
+    cursor: pointer;
+}
+
+li:hover{
+    background-color: yellow;
+}
+
+.x:after{
+    background-color: white;
+    content: "x";
+    display: flex;
+    justify-content: center;
+    font-size: 150px;
+   line-height: 150px;
+}
+
+.o:after{
+    background-color: white;
+    content: "o";
+    display: flex;
+     justify-content: center;
+   font-size: 150px;
+   line-height: 150px;
+}
+
+.game-over li {
+    background-color: white;
+}
+
+.winner:after {
+    background-color: green;
+    color: white;
+}
+
+.loser:after {
+    color: red;
+}
+
+.draw li {
+    color: red;
+}
+
+h1 {
+    text-align: center;
+}
+
+h3 {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    font-size: 25px;
+    text-align: center;
+}
+
+
+
+/* .x, .o {
+    background: white;
+    cursor: default;
+}
+.x:after {
+    content: "x";
+}
+
+.o:after {
+    content: "o";
+}
+x:after, .o:after {
+    display: block;
+    width: 100%;
+    font-size: 60px;
+    line-height: 80px;
+} */
